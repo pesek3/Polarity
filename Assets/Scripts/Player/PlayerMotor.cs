@@ -1,0 +1,94 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class PlayerMotor : MonoBehaviour
+{
+    private CharacterController controller;
+    private Vector3 playerVelocity;
+    public float speed = 5.0f; 
+    private bool isGrounded;
+    public float gravity = -9.81f;
+    public float jumpHeight = 3.0f;
+    private bool lerpCrouch;
+    private float crouchTimer;
+    private bool crouching;
+    private bool sprinting;
+    // Start is called before the first frame update
+    void Start()
+    {
+        controller = GetComponent<CharacterController>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        isGrounded = controller.isGrounded;
+        if (lerpCrouch)   // pokud je lerpCrouch true, tak se spusti timer a postupne se meni vyska controlleru
+        {
+            crouchTimer += Time.deltaTime;
+            float p = crouchTimer / 1f;
+            p *= p;
+            if (crouching)
+            {
+                controller.height = Mathf.Lerp(controller.height, 1, p);
+            }
+            else
+            {
+                controller.height = Mathf.Lerp(controller.height, 2, p);
+            }
+            if (p > 1f)
+            {
+                lerpCrouch = false;
+                crouchTimer = 0f;
+            }
+        }
+    }
+    public void SetCrouch(bool shouldCrouch)
+    {
+        if (crouching == shouldCrouch)
+        {
+            return;
+        }
+
+        crouching = shouldCrouch;
+        crouchTimer = 0f;
+        lerpCrouch = true;
+    }
+    
+    public void SetSprint(bool shouldSprint)
+    {
+        sprinting = shouldSprint;
+        if (sprinting)
+        {
+            speed = 8f;
+        }
+        else
+        {
+            speed = 5f;
+        }
+    }
+    //dostane input z input manageru a posune hrace
+    public void ProcessMove(Vector2 input)
+    {
+        Vector3 moveDirection = Vector3.zero;
+        moveDirection.x = input.x;
+        moveDirection.z = input.y;
+        controller.Move(transform.TransformDirection(moveDirection) * speed * Time.deltaTime);
+        playerVelocity.y += gravity * Time.deltaTime;
+        if (isGrounded && playerVelocity.y < 0)
+        {
+            playerVelocity.y = -2f;
+        }
+        controller.Move(playerVelocity * Time.deltaTime);
+        Debug.Log(playerVelocity.y);
+    }
+    public void Jump()
+    {
+        if (isGrounded)
+        {
+            playerVelocity.y = Mathf.Sqrt(jumpHeight * -3f * gravity);
+        }
+    }
+}
