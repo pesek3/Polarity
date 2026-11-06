@@ -38,9 +38,11 @@ public class PlayerInteract : MonoBehaviour
             if (hitInfo.collider.GetComponent<Interactable>() != null) //pokud raycast zasahl do objektu s komponentou Interactable
             {
                 Interactable interactable = hitInfo.collider.GetComponent<Interactable>();
+                Debug.Log("Looking at interactable: " + interactable.name);
                 playerUI.UpdateText(interactable.promptMessage); //vypise do konzole zpravu z komponenty Interactable
                 if (inputManager.OnFoot.Interact.triggered) //pokud je stisknuto interakce
                 {
+                    Debug.Log("Interact key pressed on: " + interactable.name);
                     interactable.BaseInteract(); //vola BaseInteract() metodu z komponenty Interactable
                 }
             }

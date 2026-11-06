@@ -30,7 +30,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Door
+    path: Door1
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -58,7 +58,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 718797587
+      path: 122190226
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -114,7 +114,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.x
-    path: Door
+    path: Door1
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -135,7 +135,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.y
-    path: Door
+    path: Door1
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -156,7 +156,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.z
-    path: Door
+    path: Door1
     classID: 4
     script: {fileID: 0}
     flags: 0

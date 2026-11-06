@@ -7,21 +7,44 @@ public class Button : Interactable
     [SerializeField]
     private GameObject door;
     private bool doorOpen;
-    // Start is called before the first frame update
-    void Start()
+
+    private void Start()
     {
-        
+        if (string.IsNullOrEmpty(promptMessage))
+        {
+            promptMessage = "Press E to use the button";
+        }
+
+        if (door == null)
+        {
+            Debug.LogWarning("Door is not assigned to the button.", this);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnMouseEnter()
     {
-        
+        Debug.Log("Mouse is over the button.");
     }
-    // tady budeme psat co se deje po interakci s buttonem
+
+    private void OnMouseExit()
+    {
+        Debug.Log("Mouse left the button.");
+    }
+
+    private void OnMouseDown()
+    {
+        Debug.Log("Button clicked.");
+        BaseInteract();
+    }
+
     protected override void Interact()
     {
-        doorOpen = !doorOpen; 
-        door.GetComponent<Animator>().SetBool("IsOpen", doorOpen); //zmeni bool v animatoru na opacny
+        doorOpen = !doorOpen;
+        Debug.Log("Button triggered. Door open: " + doorOpen);
+
+        if (door != null)
+        {
+            door.GetComponent<Animator>().SetBool("IsOpen", doorOpen);
+        }
     }
 }
